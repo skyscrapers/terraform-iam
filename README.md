@@ -2,7 +2,7 @@
 Terraform modules to set up a few regularly used IAM resources.
 
 ## kms_role
-Adds a role and isntance profile for KMS access.
+Adds a role and instance profile for KMS access.
 
 ### Available variables:
  * [`kms_key_arn`]: String(required): The ARN of the KMS key
