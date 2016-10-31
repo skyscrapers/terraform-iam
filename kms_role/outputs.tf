@@ -19,17 +19,17 @@ output "profile_name" {
 }
 
 output "policy_id" {
-  value = "${aws_iam_role_policy.packer_profile.id}"
+  value = "${aws_iam_role_policy.packer_policy.id}"
 }
 
 output "policy_name" {
-  value = "${aws_iam_role_policy.packer_profile.name}"
+  value = "${aws_iam_role_policy.packer_policy.name}"
 }
 
 output "policy_policy" {
-  value = "${aws_iam_role_policy.packer_profile.policy}"
+  value = "${aws_iam_role_policy.packer_policy.policy}"
 }
 
 output "policy_role" {
-  value = "${aws_iam_role_policy.packer_profile.role}"
+  value = "${aws_iam_role_policy.packer_policy.role}"
 }
