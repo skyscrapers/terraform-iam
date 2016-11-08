@@ -27,3 +27,21 @@ Adds a role and instance profile for KMS access.
     environment = "staging"
   }
 ```
+
+## codedeploy_role
+Add a role that can be attached to codedeploy deployment groups
+
+### Available variables
+/
+
+### Output
+* [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
+
+### Example
+```
+  module "codedeploy_role" {
+    source      = "github.com/skyscrapers/terraform-iam//codedeploy_role"
+    region      = "eu-west-1"
+  }
+
+```
