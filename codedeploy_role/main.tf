@@ -18,7 +18,7 @@ resource "aws_iam_role_policy" "codedeploy_policy" {
                 "ec2:DescribeInstances",
                 "ec2:DescribeInstanceStatus",
                 "tag:GetTags",
-            "tag:GetResources"
+                "tag:GetResources"
             ],
             "Resource": "*"
         }
