@@ -36,3 +36,11 @@ Add a role that can be attached to codedeploy deployment groups
 
 ### Output
 * [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
+
+### Example
+```
+  module "codedeploy_role" {
+    source      = "github.com/skyscrapers/terraform-iam//codedeploy_role"
+  }
+
+```
