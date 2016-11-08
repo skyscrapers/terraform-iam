@@ -37,7 +37,7 @@ resource "aws_iam_role" "codedeploy_role" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Service": "codedeploy.eu-west-1.amazonaws.com"
+        "Service": "codedeploy.${var.region}.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }

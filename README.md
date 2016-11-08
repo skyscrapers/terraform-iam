@@ -41,6 +41,7 @@ Add a role that can be attached to codedeploy deployment groups
 ```
   module "codedeploy_role" {
     source      = "github.com/skyscrapers/terraform-iam//codedeploy_role"
+    region      = "eu-west-1"
   }
 
 ```
