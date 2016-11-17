@@ -27,8 +27,3 @@ resource "aws_iam_policy" "kms_policy" {
 }
 EOF
 }
-
-resource "aws_iam_role_policy_attachment" "kms_policy_attach" {
-  role       = "${var.aws_iam_role_name}"
-  policy_arn = "${aws_iam_policy.policy.arn}"
-}
