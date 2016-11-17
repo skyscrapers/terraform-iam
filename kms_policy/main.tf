@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "kms_policy" {
-  name        = "kms-usage-policy"
+  name        = "kms-usage-policy-${var.name}"
   description = "A policy to allow usage (encrypt & decrypt) of a KMS key"
 
   policy = <<EOF
