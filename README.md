@@ -45,3 +45,23 @@ Add a role that can be attached to codedeploy deployment groups
   }
 
 ```
+
+## User
+
+### Available variables:
+* [`user_names`]: List(required): List of users that needs to be created
+* [`php_key`]: String(required): Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username
+
+### Output
+* [`unique_id`]: The unique ID assigned by AWS
+* [`passwords`]: The encrypted password, base64 encoded
+* [`arns`]: The ARN assigned by AWS for this user
+
+### Example
+```
+module "iam_users" {
+  source = "github.com/skyscrapers/terraform-iam//user"
+  user_names = ["user1", "user2", "user3"]
+  pgp_key = "keybase:user"
+}
+```
