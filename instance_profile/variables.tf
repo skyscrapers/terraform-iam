@@ -28,6 +28,6 @@ variable "aws_iam_role_policy" {
 EOF
 }
 
-variable "aws_iam_role_policy" {
+variable "aws_iam_role" {
   default = ""
 }

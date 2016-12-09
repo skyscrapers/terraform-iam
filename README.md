@@ -28,6 +28,43 @@ Adds a role and instance profile for KMS access.
   }
 ```
 
+## instance_profile
+Adds a role and instance profile.
+
+### Available variables:
+ * [`project`]: String(required): The name of the project. This is helpful if you have more than 1 project
+ * [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
+ * [`function`]: String(required): The function of that instance_profile.
+ * [`aws_iam_role_policy`]: String: The iam_role_policy for that instance.
+ * [`aws_iam_role`]: String(required): the iam_role for that profile.
+
+### Output
+ * [`iam_id`]: String: The role profile ID.
+### Example
+```
+module "iam" {
+  source      = "github.com/skyscrapers/terraform-iam//instance_profile?ref=27b7525e0b6bfaf1eb034daf941a8f44b052b904"
+  project     = "${var.project}"
+  environment = "${var.environment}"
+  function    = "${var.app_name}"
+
+  aws_iam_role = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+      "sqs:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "${module.sqs.sqs_arn}"
+      }
+    ]
+}
+EOF
+}
+```
+
 ## codedeploy_role
 Add a role that can be attached to codedeploy deployment groups
 
