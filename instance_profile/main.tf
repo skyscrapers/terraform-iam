@@ -11,5 +11,5 @@ resource "aws_iam_role_policy" "policy" {
 
 resource "aws_iam_role" "role" {
   name               = "policy_${var.project}_${var.environment}_${var.function}"
-  assume_role_policy = "${var.aws_iam_role_policy}"
+  assume_role_policy = "${var.aws_iam_role}"
 }
