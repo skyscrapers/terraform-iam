@@ -40,6 +40,7 @@ Adds a role and instance profile.
 
 ### Output
  * [`iam_id`]: String: The role profile ID.
+
 ### Example
 ```
 module "iam" {
