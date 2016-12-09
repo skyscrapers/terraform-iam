@@ -10,7 +10,7 @@ variable "function" {
   default = ""
 }
 
-variable "aws_iam_role_policy" {
+variable "aws_iam_role" {
   default = <<EOF
 {
   "Version": "2012-10-17",
@@ -28,6 +28,6 @@ variable "aws_iam_role_policy" {
 EOF
 }
 
-variable "aws_iam_role" {
+variable "aws_iam_role_policy" {
   default = ""
 }
