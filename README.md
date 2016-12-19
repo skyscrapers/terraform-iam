@@ -124,12 +124,12 @@ Add a role that can be attached to packer iam role to access the codedeploy s3 b
     environment = "staging"
   }
 
-  module "cddep_packer_policy" {
+  module "codedeploy_packer_policy" {
     source      = "github.com/skyscrapers/terraform-iam//codedeploy_packer_policy"
   }
   resource "aws_iam_role_policy_attachment" "codedeploy_policy_attach_packer" {
     role       = "${module.packer_role.role_name}"
-    policy_arn = "${module.cddep_packer_policy.iam_policy_arn}"
+    policy_arn = "${module.codedeploy_packer_policy.iam_policy_arn}"
   }
 
 ```
