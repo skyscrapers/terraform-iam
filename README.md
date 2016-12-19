@@ -103,3 +103,33 @@ module "iam_users" {
   pgp_key = "keybase:user"
 }
 ```
+
+## codedeploy_packer_policy
+Add a role that can be attached to packer iam role to access the codedeploy s3 bucket to install the agent
+
+### Available variables
+* [`region`]: String:  The region of the codedeploy agent s3 bucket default to us-east-1
+
+
+### Output
+* [`iam_policy_arn`]: String: The Amazon Resource Name (ARN) of the policy created.
+* [`iam_policy_name`]: String: The name of the policy created.
+* [`iam_policy_id`]: String: The id of the policy created.
+
+### Example
+```
+  module "packer_role" {
+    source      = "github.com/skyscrapers/terraform-iam//kms_role"
+    kms_key_arn = "${aws_kms_key.kms_key.arn}"
+    environment = "staging"
+  }
+
+  module "cddep_packer_policy" {
+    source      = "github.com/skyscrapers/terraform-iam//codedeploy_packer_policy"
+  }
+  resource "aws_iam_role_policy_attachment" "codedeploy_policy_attach_packer" {
+    role       = "${module.packer_role.role_name}"
+    policy_arn = "${module.cddep_packer_policy.iam_policy_arn}"
+  }
+
+```
