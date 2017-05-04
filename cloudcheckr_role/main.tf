@@ -1,5 +1,5 @@
 resource "aws_iam_role_policy" "cloudcheckr_policy" {
-    name = "codedeploy"
+    name = "cloudcheckr"
     role = "${aws_iam_role.cloudcheckr_role.id}"
     policy = <<EOF
 {
