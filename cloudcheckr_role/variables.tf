@@ -1,0 +1,2 @@
+variable "external_id" {
+}
