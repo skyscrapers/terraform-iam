@@ -28,6 +28,27 @@ Adds a role and instance profile for KMS access.
   }
 ```
 
+## kms_policy
+Creates an IAM policy that allows usage of a KMS key.
+
+### Available variables
+* [`kms_key_arn`]: String(required): The ARN of the KMS key
+* [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
+
+### Output
+* [`iam_policy_id`]: String: The generated policy id.
+* [`iam_policy_arn`]: String: The generated policy ARN.
+* [`iam_policy_name`]: String: The generated policy name.
+
+### Example
+```
+  module "packer_policy" {
+    source      = "github.com/skyscrapers/terraform-iam//kms_policy"
+    kms_key_arn = "${aws_kms_key.kms_key.arn}"
+    environment = "staging"
+  }
+```
+
 ## instance_profile
 Adds a role and instance profile.
 
