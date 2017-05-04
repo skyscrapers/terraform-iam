@@ -133,3 +133,23 @@ Add a role that can be attached to packer iam role to access the codedeploy s3 b
   }
 
 ```
+
+## cloudcheckr_role
+Add a role that can be used by cloudcheckr to collect data and stats
+
+### Available variables
+* [`external_id`]: String:  The external_id provided in the cloudcheckr console
+
+
+### Output
+* [`role_arn`]: String: The Amazon Resource Name (ARN) of the role created.
+
+### Example
+```
+  module "packer_role" {
+    source      = "github.com/skyscrapers/terraform-iam//cloudcheckr_role"
+    external_id = "..."
+  }
+
+
+```
