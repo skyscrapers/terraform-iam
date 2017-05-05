@@ -167,7 +167,7 @@ Add a role that can be used by cloudcheckr to collect data and stats
 
 ### Example
 ```
-  module "packer_role" {
+  module "cloudcheckr_role" {
     source      = "github.com/skyscrapers/terraform-iam//cloudcheckr_role"
     external_id = "..."
   }
