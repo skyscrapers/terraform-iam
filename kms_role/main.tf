@@ -1,6 +1,6 @@
 resource "aws_iam_instance_profile" "packer_profile" {
   name  = "profile_packer_${var.environment}"
-  roles = ["${aws_iam_role.packer_role.name}"]
+  role = "${aws_iam_role.packer_role.name}"
 }
 
 resource "aws_iam_role" "packer_role" {
