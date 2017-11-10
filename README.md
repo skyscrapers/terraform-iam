@@ -180,10 +180,10 @@ Add a role that can be used by cloudcheckr to collect data and stats
 Adding role for cloudwatch monitoring to allow instance to send custom metrics
 
 ### Available variables
-* [`instance_role`]: String: The name of the instance role to attach the policies to.
-* [`app`]: String: The name of the application to be used in role name.
-* [`project`]: String: The name of the project to be used in role name.
-* [`environment`]: String: The name of the enviroment to be used in role name.
+* [`instance_role`]: String(required): The name of the instance role to attach the policies to.
+* [`app`]: String(optional): The name of the application to be used in role name.
+* [`project`]: String(optional): The name of the project to be used in role name.
+* [`environment`]: String(optional): The name of the enviroment to be used in role name.
 
 
 ### Example
