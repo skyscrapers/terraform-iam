@@ -1,6 +1,6 @@
 data "aws_iam_policy_document" "cloudwatch_monitoring_policy" {
   statement {
-    sid     = "1"
+    sid     = "CloudWatchMonitoring"
     actions = ["cloudwatch:PutMetricData", "cloudwatch:GetMetricStatistics", "cloudwatch:ListMetrics", "ec2:DescribeTags"]
     effect  = "Allow"
 
