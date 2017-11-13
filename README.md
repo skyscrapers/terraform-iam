@@ -174,3 +174,25 @@ Add a role that can be used by cloudcheckr to collect data and stats
 
 
 ```
+
+
+## CloudWatch Monitoring role
+Adding role for cloudwatch monitoring to allow instance to send custom metrics
+
+### Available variables
+* [`instance_role`]: String(required): The name of the instance role to attach the policies to.
+* [`app`]: String(optional): The name of the application to be used in role name.
+* [`project`]: String(optional): The name of the project to be used in role name.
+* [`environment`]: String(optional): The name of the enviroment to be used in role name.
+
+
+### Example
+```
+module "iam-monitoring" {
+  source        = "github.com/skyscrapers/terraform-iam//cloudwatch_monitoring_role"
+  environment   = "${terraform.workspace}"
+  project       = "${var.project}"
+  app           = "api"
+  instance_role = "${aws_iam_role.role.name}"
+}
+```
