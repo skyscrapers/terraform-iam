@@ -196,3 +196,18 @@ module "iam-monitoring" {
   instance_role = "${aws_iam_role.role.name}"
 }
 ```
+
+## packer_policy
+Creates an IAM policy that allows usage of a Packer with AWS EC2 EBS volumes.
+
+### Output
+* [`packer_policy_id`]: String: The generated policy id.
+* [`packer_policy_arn`]: String: The generated policy ARN.
+* [`packer_policy_name`]: String: The generated policy name.
+
+### Example
+```
+  module "packer_policy" {
+    source      = "github.com/skyscrapers/terraform-iam//packer_policy"
+  }
+```
