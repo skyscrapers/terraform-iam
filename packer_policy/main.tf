@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "packer_policy" {
-  name        = "Packer policy"
+  name        = "packer-policy"
   path        = "/"
   description = "Policy for Packer EC2 EBS"
 
