@@ -9,6 +9,7 @@ resource "aws_iam_policy" "packer_policy" {
   "Statement": [{
       "Effect": "Allow",
       "Action" : [
+        "iam:PassRole",
         "ec2:AttachVolume",
         "ec2:AuthorizeSecurityGroupIngress",
         "ec2:CopyImage",
