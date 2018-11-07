@@ -95,6 +95,8 @@ Add a role that can be attached to codedeploy deployment groups
 
 ### Output
 * [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
+* [`role_name`]: String: The name of the role.
+* [`role_unique_id`]: String: The stable and unique string identifying the role.
 
 ### Example
 ```
