@@ -229,12 +229,12 @@ Creates an IAM user to be used to automate Terraform in CI. This terraform user 
 
 | Name | Description |
 |------|-------------|
-| terraform_ci_user_access_key_id | Access Key Id of the created terraform user |
-| terraform_ci_user_arn | The ARN assigned by AWS for this user |
-| terraform_ci_user_name | The user's name |
-| terraform_ci_user_path | Path in which the user is created |
-| terraform_ci_user_secret_access_key | The encrypted Secret Access Key of the created terraform user, base64 encoded |
-| terraform_ci_user_unique_id | The [unique ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#GUIDs) assigned by AWS |
+| user_access_key_id | Access Key Id of the created terraform user |
+| user_arn | The ARN assigned by AWS for this user |
+| user_name | The user's name |
+| user_path | Path in which the user is created |
+| secret_access_key | The encrypted Secret Access Key of the created terraform user, base64 encoded |
+| unique_id | The [unique ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#GUIDs) assigned by AWS |
 
 ### Example
 
