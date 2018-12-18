@@ -213,3 +213,34 @@ Creates an IAM policy that allows usage of a Packer with AWS EC2 EBS volumes.
     source      = "github.com/skyscrapers/terraform-iam//packer_policy"
   }
 ```
+
+## terraform_ci
+
+Creates an IAM user to be used to automate Terraform in CI. This terraform user will have admin access to the AWS account.
+
+### Variables
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| environment | The environment where this user is deployed to. If not set or left empty, it'll fallback to `terraform.workspace` | string | `` | no |
+| keybase_username | Either a base-64 encoded PGP public key, or a keybase username in the form `keybase:some_person_that_exists`. Will be used to encrypt the secret access key of the created user | string | - | yes |
+
+### Outputs
+
+| Name | Description |
+|------|-------------|
+| terraform_ci_user_access_key_id | Access Key Id of the created terraform user |
+| terraform_ci_user_arn | The ARN assigned by AWS for this user |
+| terraform_ci_user_name | The user's name |
+| terraform_ci_user_path | Path in which the user is created |
+| terraform_ci_user_secret_access_key | The encrypted Secret Access Key of the created terraform user, base64 encoded |
+| terraform_ci_user_unique_id | The [unique ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#GUIDs) assigned by AWS |
+
+### Example
+
+```tf
+module "terraform_ci_user" {
+  source  = "github.com/skyscrapers/terraform-iam//terraform_ci"
+  pgp_key = "keybase:some_person_that_exists"
+}
+```
