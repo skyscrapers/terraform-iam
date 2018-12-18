@@ -223,7 +223,7 @@ Creates an IAM user to be used to automate Terraform in CI. This terraform user 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | environment | The environment where this user is deployed to. If not set or left empty, it'll fallback to `terraform.workspace` | string | `` | no |
-| keybase_username | Either a base-64 encoded PGP public key, or a keybase username in the form `keybase:some_person_that_exists`. Will be used to encrypt the secret access key of the created user | string | - | yes |
+| pgp_key | Either a base-64 encoded PGP public key, or a keybase username in the form `keybase:some_person_that_exists`. Will be used to encrypt the secret access key of the created user | string | - | yes |
 
 ### Outputs
 
