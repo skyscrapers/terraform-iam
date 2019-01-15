@@ -19,5 +19,5 @@ resource "aws_iam_role" "ro" {
 
 resource "aws_iam_role_policy_attachment" "ro" {
   role       = "${aws_iam_role.ro.name}"
-  policy_arn = "arn:aws:iam::aws:policy/ReadOnly"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
