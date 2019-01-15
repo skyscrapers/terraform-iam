@@ -12,6 +12,7 @@ data "aws_iam_policy_document" "ro_assume_role_policy" {
 
 resource "aws_iam_role" "ro" {
   name               = "readonly"
+  path               = "/ops/"
   description        = "This role has read only access to this account"
   assume_role_policy = "${data.aws_iam_policy_document.ro_assume_role_policy.json}"
 }
