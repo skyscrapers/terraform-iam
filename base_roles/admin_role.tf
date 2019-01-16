@@ -5,7 +5,7 @@ data "aws_iam_policy_document" "admin_assume_role_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${var.admin_role_principals_arns}"]
+      identifiers = ["${var.admin_role_principal_ids}"]
     }
   }
 }

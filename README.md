@@ -256,8 +256,8 @@ Creates some base IAM roles:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| admin_account_id | Id of the AWS account of the admin account | string | - | yes |
-| admin_role_principals_arns | List of AWS principal ARNs that'll be allowed to assume the admin role in the ops account | list | - | yes |
+| admin_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the admin role in the ops account | list | - | yes |
+| readonly_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the readonly role in the ops account | list | - | yes |
 
 ### Outputs
 
@@ -270,8 +270,8 @@ Creates some base IAM roles:
 
 ```tf
 module "base_roles" {
-  source                     = "github.com/skyscrapers/terraform-iam//base_roles"
-  admin_account_id           = "109034686754"
-  admin_role_principals_arns = ["arn:aws:iam::109034686754:role/something"]
+  source                      = "github.com/skyscrapers/terraform-iam//base_roles"
+  readonly_role_principal_ids = ["109034686754"]
+  admin_role_principals_arns  = ["arn:aws:iam::109034686754:role/something"]
 }
 ```
