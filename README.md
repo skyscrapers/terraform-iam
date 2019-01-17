@@ -244,3 +244,34 @@ module "terraform_ci_user" {
   pgp_key = "keybase:some_person_that_exists"
 }
 ```
+
+## base_roles
+
+Creates some base IAM roles:
+
+* `admin` with `AdministratorAccess` policy attached
+* `ro` with `ReadOnlyAccess` policy attached
+
+### Variables
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| admin_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the admin role in the ops account | list | - | yes |
+| readonly_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the readonly role in the ops account | list | - | yes |
+
+### Outputs
+
+| Name | Description |
+|------|-------------|
+| admin_role_arn | Admin role ARN |
+| ro_role_arn | Readonly role ARN |
+
+### Example
+
+```tf
+module "base_roles" {
+  source                      = "github.com/skyscrapers/terraform-iam//base_roles"
+  readonly_role_principal_ids = ["109034686754"]
+  admin_role_principals_arns  = ["arn:aws:iam::109034686754:role/something"]
+}
+```
