@@ -91,12 +91,18 @@ EOF
 Add a role that can be attached to codedeploy deployment groups
 
 ### Available variables
-/
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| region | Region where codedeploy will run in | string | `"eu-west-1"` | no |
 
 ### Output
-* [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
-* [`role_name`]: String: The name of the role.
-* [`role_unique_id`]: String: The stable and unique string identifying the role.
+
+| Name | Description |
+|------|-------------|
+| role\_arn | The Amazon Resource Name (ARN) specifying the role. |
+| role\_name | The name of the role. |
+| role\_unique\_id | The stable and unique string identifying the role. |
 
 ### Example
 ```
