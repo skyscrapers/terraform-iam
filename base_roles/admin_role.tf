@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "admin_assume_role_policy" {
 
 resource "aws_iam_role" "admin" {
   name               = "admin"
-  path               = "/ops/"
+  path               = var.roles_path
   description        = "This role has full Aministrator access and is to be assumed to mange this account"
   assume_role_policy = data.aws_iam_policy_document.admin_assume_role_policy.json
 }
@@ -21,4 +21,3 @@ resource "aws_iam_role_policy_attachment" "admin" {
   role       = aws_iam_role.admin.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
-

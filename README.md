@@ -264,6 +264,7 @@ Creates some base IAM roles:
 |------|-------------|:----:|:-----:|:-----:|
 | admin_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the admin role in the ops account | list | - | yes |
 | readonly_role_principal_ids | List of AWS principal ids (or ARNs) that'll be allowed to assume the readonly role in the ops account | list | - | yes |
+| roles_path | Path of the roles created | string | /ops/ | no |
 
 ### Outputs
 
