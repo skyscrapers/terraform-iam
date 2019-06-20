@@ -26,4 +26,6 @@ resource "aws_iam_policy" "kms_policy" {
   ]
 }
 EOF
+
 }
+

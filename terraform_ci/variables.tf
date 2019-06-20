@@ -6,3 +6,4 @@ variable "environment" {
 variable "pgp_key" {
   description = "Either a base-64 encoded PGP public key, or a keybase username in the form `keybase:some_person_that_exists`. Will be used to encrypt the secret access key of the created user"
 }
+

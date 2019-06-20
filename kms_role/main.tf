@@ -1,6 +1,6 @@
 resource "aws_iam_instance_profile" "packer_profile" {
-  name  = "profile_packer_${var.environment}"
-  role = "${aws_iam_role.packer_role.name}"
+  name = "profile_packer_${var.environment}"
+  role = aws_iam_role.packer_role.name
 }
 
 resource "aws_iam_role" "packer_role" {
@@ -22,11 +22,12 @@ resource "aws_iam_role" "packer_role" {
     ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "packer_policy" {
   name = "policy_packer_${var.environment}"
-  role = "${aws_iam_role.packer_role.id}"
+  role = aws_iam_role.packer_role.id
 
   policy = <<EOF
 {
@@ -52,4 +53,6 @@ resource "aws_iam_role_policy" "packer_policy" {
   ]
 }
 EOF
+
 }
+

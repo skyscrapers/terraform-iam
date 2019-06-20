@@ -16,4 +16,6 @@ resource "aws_iam_policy" "codedeploy_install_policy" {
   ]
 }
 EOF
+
 }
+

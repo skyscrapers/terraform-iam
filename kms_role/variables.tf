@@ -1,3 +1,6 @@
-variable "kms_key_arn" {}
+variable "kms_key_arn" {
+}
 
-variable "environment" {}
+variable "environment" {
+}
+

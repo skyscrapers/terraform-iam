@@ -1,7 +1,7 @@
 resource "aws_iam_role_policy" "cloudcheckr_policy" {
-    name = "cloudcheckr"
-    role = "${aws_iam_role.cloudcheckr_role.id}"
-    policy = <<EOF
+  name   = "cloudcheckr"
+  role   = aws_iam_role.cloudcheckr_role.id
+  policy = <<EOF
 {
 
     "Version": "2012-10-17",
@@ -324,12 +324,12 @@ resource "aws_iam_role_policy" "cloudcheckr_policy" {
 
 }
 EOF
+
 }
 
-
 resource "aws_iam_role" "cloudcheckr_role" {
-    name = "CloudCheckrRole"
-    assume_role_policy = <<EOF
+  name = "CloudCheckrRole"
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -348,4 +348,6 @@ resource "aws_iam_role" "cloudcheckr_role" {
   ]
 }
 EOF
+
 }
+

@@ -47,4 +47,6 @@ resource "aws_iam_policy" "packer_policy" {
   }]
 }
 EOF
+
 }
+
