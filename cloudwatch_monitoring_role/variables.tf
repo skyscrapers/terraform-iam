@@ -1,5 +1,5 @@
 variable "project" {
-   default = ""
+  default = ""
 }
 
 variable "environment" {
@@ -10,5 +10,6 @@ variable "instance_role" {
 }
 
 variable "app" {
-   default = ""
+  default = ""
 }
+

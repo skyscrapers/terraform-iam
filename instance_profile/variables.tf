@@ -26,8 +26,10 @@ variable "aws_iam_role" {
   ]
 }
 EOF
+
 }
 
 variable "aws_iam_role_policy" {
   default = ""
 }
+
