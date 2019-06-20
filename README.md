@@ -116,7 +116,7 @@ Add a role that can be attached to codedeploy deployment groups
 ## User
 
 ### Available variables:
-* [`user_names`]: List(required): List of users that needs to be created
+* [`user_names`]: List(string)(required): List of users that needs to be created
 * [`pgp_key`]: String(required): Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username. Used to encrypt the password for safe transport to the user.
 
 ### Output
