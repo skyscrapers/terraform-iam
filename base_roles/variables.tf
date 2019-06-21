@@ -8,3 +8,7 @@ variable "readonly_role_principal_ids" {
   type        = list(string)
 }
 
+variable "roles_path" {
+  description = "Path of the roles created"
+  default = "/ops/"
+}
