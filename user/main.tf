@@ -9,4 +9,3 @@ resource "aws_iam_user_login_profile" "user_login" {
   pgp_key                 = var.pgp_key
   password_reset_required = "true"
 }
-

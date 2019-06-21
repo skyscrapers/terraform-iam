@@ -120,9 +120,9 @@ Add a role that can be attached to codedeploy deployment groups
 * [`pgp_key`]: String(required): Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username. Used to encrypt the password for safe transport to the user.
 
 ### Output
-* [`unique_id`]: The unique ID assigned by AWS
-* [`passwords`]: The encrypted password, base64 encoded. The encrypted password may be decrypted using: `terraform output password | base64 --decode | keybase pgp decrypt`
-* [`arns`]: The ARN assigned by AWS for this user
+* [`unique_ids`]: List of the unique IDs assigned by AWS to the users
+* [`passwords`]: List of the encrypted passwords, base64 encoded. An encrypted password may be decrypted using: `terraform output password | base64 --decode | keybase pgp decrypt`
+* [`arns`]: List of the ARNs assigned by AWS to the users
 
 ### Example
 ```
