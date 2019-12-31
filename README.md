@@ -1,26 +1,31 @@
 # terraform-iam
+
 Terraform modules to set up a few regularly used IAM resources.
 
 ## kms_role
+
 Adds a role and instance profile for KMS access.
 
-### Available variables:
- * [`kms_key_arn`]: String(required): The ARN of the KMS key
- * [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
+### Available variables
+
+* [`kms_key_arn`]: String(required): The ARN of the KMS key
+* [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
 
 ### Output
- * [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
- * [`role_unique_id`]: String: The stable and unique string identifying the role.
- * [`profile_id`]: String: The instance profile's ID.
- * [`profile_arn`]: String: The ARN assigned by AWS to the instance profile.
- * [`profile_name`]: String: The instance profile's name.
- * [`policy_id`]: String: The role policy ID.
- * [`policy_name`]: String:  The name of the policy.
- * [`policy_policy`]: String: The policy document attached to the role.
- * [`policy_role`]: String: The role to which this policy applies.
+
+* [`role_arn`]: String: The Amazon Resource Name (ARN) specifying the role.
+* [`role_unique_id`]: String: The stable and unique string identifying the role.
+* [`profile_id`]: String: The instance profile's ID.
+* [`profile_arn`]: String: The ARN assigned by AWS to the instance profile.
+* [`profile_name`]: String: The instance profile's name.
+* [`policy_id`]: String: The role policy ID.
+* [`policy_name`]: String:  The name of the policy.
+* [`policy_policy`]: String: The policy document attached to the role.
+* [`policy_role`]: String: The role to which this policy applies.
 
 ### Example
-```
+
+```tf
   module "packer_role" {
     source      = "github.com/skyscrapers/terraform-iam//kms_role"
     kms_key_arn = "${aws_kms_key.kms_key.arn}"
@@ -29,19 +34,23 @@ Adds a role and instance profile for KMS access.
 ```
 
 ## kms_policy
+
 Creates an IAM policy that allows usage of a KMS key.
 
 ### Available variables
+
 * [`kms_key_arn`]: String(required): The ARN of the KMS key
 * [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
 
 ### Output
+
 * [`iam_policy_id`]: String: The generated policy id.
 * [`iam_policy_arn`]: String: The generated policy ARN.
 * [`iam_policy_name`]: String: The generated policy name.
 
 ### Example
-```
+
+```tf
   module "packer_policy" {
     source      = "github.com/skyscrapers/terraform-iam//kms_policy"
     kms_key_arn = "${aws_kms_key.kms_key.arn}"
@@ -50,20 +59,24 @@ Creates an IAM policy that allows usage of a KMS key.
 ```
 
 ## instance_profile
+
 Adds a role and instance profile.
 
-### Available variables:
- * [`project`]: String(required): The name of the project. This is helpful if you have more than 1 project
- * [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
- * [`function`]: String(required): The function of that instance_profile.
- * [`aws_iam_role_policy`]: String: The iam_role_policy for that instance.
- * [`aws_iam_role`]: String(required): the iam_role for that profile.
+### Available variables
+
+* [`project`]: String(required): The name of the project. This is helpful if you have more than 1 project
+* [`environment`]: String(required): How do you want to call your environment, this is helpful if you have more than 1 VPC.
+* [`function`]: String(required): The function of that instance_profile.
+* [`aws_iam_role_policy`]: String: The iam_role_policy for that instance.
+* [`aws_iam_role`]: String(required): the iam_role for that profile.
 
 ### Output
- * [`iam_id`]: String: The role profile ID.
+
+* [`iam_id`]: String: The role profile ID.
 
 ### Example
-```
+
+```tf
 module "iam" {
   source      = "github.com/skyscrapers/terraform-iam//instance_profile?ref=27b7525e0b6bfaf1eb034daf941a8f44b052b904"
   project     = "${var.project}"
@@ -88,6 +101,7 @@ EOF
 ```
 
 ## codedeploy_role
+
 Add a role that can be attached to codedeploy deployment groups
 
 ### Available variables
@@ -105,7 +119,8 @@ Add a role that can be attached to codedeploy deployment groups
 | role\_unique\_id | The stable and unique string identifying the role. |
 
 ### Example
-```
+
+```tf
   module "codedeploy_role" {
     source      = "github.com/skyscrapers/terraform-iam//codedeploy_role"
     region      = "eu-west-1"
@@ -115,17 +130,20 @@ Add a role that can be attached to codedeploy deployment groups
 
 ## User
 
-### Available variables:
+### Available variables
+
 * [`user_names`]: List(string)(required): List of users that needs to be created
 * [`pgp_key`]: String(required): Either a base-64 encoded PGP public key, or a keybase username in the form keybase:username. Used to encrypt the password for safe transport to the user.
 
 ### Output
+
 * [`unique_ids`]: List of the unique IDs assigned by AWS to the users
 * [`passwords`]: List of the encrypted passwords, base64 encoded. An encrypted password may be decrypted using: `terraform output password | base64 --decode | keybase pgp decrypt`
 * [`arns`]: List of the ARNs assigned by AWS to the users
 
 ### Example
-```
+
+```tf
 module "iam_users" {
   source = "github.com/skyscrapers/terraform-iam//user"
   user_names = ["user1", "user2", "user3"]
@@ -134,19 +152,22 @@ module "iam_users" {
 ```
 
 ## codedeploy_packer_policy
+
 Add a role that can be attached to packer iam role to access the codedeploy s3 bucket to install the agent
 
 ### Available variables
+
 * [`region`]: String:  The region of the codedeploy agent s3 bucket default to us-east-1
 
-
 ### Output
+
 * [`iam_policy_arn`]: String: The Amazon Resource Name (ARN) of the policy created.
 * [`iam_policy_name`]: String: The name of the policy created.
 * [`iam_policy_id`]: String: The id of the policy created.
 
 ### Example
-```
+
+```tf
   module "packer_role" {
     source      = "github.com/skyscrapers/terraform-iam//kms_role"
     kms_key_arn = "${aws_kms_key.kms_key.arn}"
@@ -164,38 +185,40 @@ Add a role that can be attached to packer iam role to access the codedeploy s3 b
 ```
 
 ## cloudcheckr_role
+
 Add a role that can be used by cloudcheckr to collect data and stats
 
 ### Available variables
+
 * [`external_id`]: String:  The external_id provided in the cloudcheckr console
 
-
 ### Output
+
 * [`role_arn`]: String: The Amazon Resource Name (ARN) of the role created.
 
 ### Example
-```
+
+```tf
   module "cloudcheckr_role" {
     source      = "github.com/skyscrapers/terraform-iam//cloudcheckr_role"
     external_id = "..."
   }
-
-
 ```
 
-
 ## CloudWatch Monitoring role
+
 Adding role for cloudwatch monitoring to allow instance to send custom metrics
 
 ### Available variables
+
 * [`instance_role`]: String(required): The name of the instance role to attach the policies to.
 * [`app`]: String(optional): The name of the application to be used in role name.
 * [`project`]: String(optional): The name of the project to be used in role name.
 * [`environment`]: String(optional): The name of the enviroment to be used in role name.
 
-
 ### Example
-```
+
+```tf
 module "iam-monitoring" {
   source        = "github.com/skyscrapers/terraform-iam//cloudwatch_monitoring_role"
   environment   = "${terraform.workspace}"
@@ -206,15 +229,18 @@ module "iam-monitoring" {
 ```
 
 ## packer_policy
+
 Creates an IAM policy that allows usage of a Packer with AWS EC2 EBS volumes.
 
 ### Output
+
 * [`packer_policy_id`]: String: The generated policy id.
 * [`packer_policy_arn`]: String: The generated policy ARN.
 * [`packer_policy_name`]: String: The generated policy name.
 
 ### Example
-```
+
+```tf
   module "packer_policy" {
     source      = "github.com/skyscrapers/terraform-iam//packer_policy"
   }
