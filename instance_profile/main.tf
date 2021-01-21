@@ -1,6 +1,6 @@
 resource "aws_iam_instance_profile" "profile" {
   name  = "profile_${var.project}_${var.environment}_${var.function}"
-  roles = [aws_iam_role.role.name]
+  role = aws_iam_role.role.name
 }
 
 resource "aws_iam_role_policy" "policy" {
