@@ -5,5 +5,12 @@ variable "principal_ids" {
 
 variable "roles_path" {
   description = "Path of the roles created"
+  type        = string
   default     = "/ops/"
+}
+
+variable "require_mfa" {
+  description = "Whether to require an MFA token to assume this role"
+  type        = bool
+  default     = false
 }
