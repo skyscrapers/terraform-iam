@@ -7,6 +7,16 @@ data "aws_iam_policy_document" "k8s_admin_assume_role_policy" {
       type        = "AWS"
       identifiers = var.principal_ids
     }
+
+    dynamic "condition" {
+      for_each = var.require_mfa ? [1] : []
+
+      content {
+        test     = "Bool"
+        variable = "aws:MultiFactorAuthPresent"
+        values   = ["true"]
+      }
+    }
   }
 }
 
@@ -25,6 +35,16 @@ data "aws_iam_policy_document" "k8s_developer_assume_role_policy" {
     principals {
       type        = "AWS"
       identifiers = var.principal_ids
+    }
+
+    dynamic "condition" {
+      for_each = var.require_mfa ? [1] : []
+
+      content {
+        test     = "Bool"
+        variable = "aws:MultiFactorAuthPresent"
+        values   = ["true"]
+      }
     }
   }
 }
