@@ -71,7 +71,8 @@ data "aws_iam_policy_document" "eks_read_access" {
       "eks:DescribeUpdate",
       "eks:DescribeCluster",
       "eks:ListClusters",
-      "eks:DescribeAddonVersions"
+      "eks:DescribeAddonVersions",
+      "eks:AccessKubernetesApi"
     ]
     resources = ["*"]
   }
