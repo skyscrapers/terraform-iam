@@ -412,10 +412,8 @@ From the above:
 
 ### Design considerations
 
-For each Permission Set that is assigned to an account, AWS SSO creates a IAM role in that account. For example, if the `Developer` Permission Set is used in an account for one or more groups, AWS will create an IAM role named `AWSReservedSSO_Developer_1234567890...` in that account.
+For each Permission Set that is assigned to an account, AWS SSO creates an IAM role in that account. For example, if the `Developer` Permission Set is used in an account for one or more groups, AWS will create an IAM role named `AWSReservedSSO_Developer_1234567890...` in that account.
 
 We user IAM roles in each of the infrastructure accounts to authenticate to Kubernetes (EKS) clusters, and these roles are mapped to internal k8s groups that are then used to assign different RBAC permissions.
 
 To be able to grant meaningful RBAC permissions in K8s to users, the used IAM roles must identify the group the user belongs to. This is why we made the decision to map each SSO group to a single Permission Set with the same name. This way the information of the group a user belongs to is carried over to the K8s authorization level, and the correct RBAC permissions can be assigned to each group.
-
-The mapping between IAM roles and K8s groups is done in the cluster definition file.
