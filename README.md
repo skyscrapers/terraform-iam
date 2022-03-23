@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+
 # terraform-iam
 
 Terraform modules to set up a few regularly used IAM resources.
@@ -315,3 +317,105 @@ module "base_roles" {
   admin_role_principals_arns  = ["arn:aws:iam::109034686754:role/something"]
 }
 ```
+
+## sso
+
+This Terraform module configures the AWS Single Sign-on in the master account. The SSO identity source and SSO groups must be created manually through the AWS console. Populating the groups with users is also outside the scope of this module.
+
+This module manages:
+
+* The different permission sets and their attached policies
+* The assignments between permission sets, groups and accounts
+
+The main configuration point of the module is the `permission_sets` variable, where each permission set is assigned a set of policies and mapped to a list of AWS accounts.
+
+### Requirements
+
+No requirements.
+
+### Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+
+### Modules
+
+No modules.
+
+### Resources
+
+| Name | Type |
+|------|------|
+| [aws_ssoadmin_account_assignment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_account_assignment) | resource |
+| [aws_ssoadmin_managed_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_managed_policy_attachment) | resource |
+| [aws_ssoadmin_permission_set.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set) | resource |
+| [aws_ssoadmin_permission_set_inline_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set_inline_policy) | resource |
+| [aws_iam_policy_document.combined](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.eks_viewer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_identitystore_group.groups](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/identitystore_group) | data source |
+
+### Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_permission_sets"></a> [permission\_sets](#input\_permission\_sets) | n/a | <pre>map(object({<br>    description      = string<br>    group            = string<br>    managed_policies = list(string)<br>    inline_policies  = list(string)<br>    eks_access       = bool<br>    account_ids      = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_sso_instance_arn"></a> [sso\_instance\_arn](#input\_sso\_instance\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_sso_instance_id"></a> [sso\_instance\_id](#input\_sso\_instance\_id) | n/a | `string` | n/a | yes |
+| <a name="input_default_ps_session_duration"></a> [default\_ps\_session\_duration](#input\_default\_ps\_session\_duration) | n/a | `string` | `"PT8H"` | no |
+
+### Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_account_assignments"></a> [account\_assignments](#output\_account\_assignments) | n/a |
+| <a name="output_permission_set_arns"></a> [permission\_set\_arns](#output\_permission\_set\_arns) | n/a |
+
+### Example
+
+```tf
+data "aws_ssoadmin_instances" "main" {}
+
+module "sso_config" {
+  source = "github.com/skyscrapers/terraform-iam//sso"
+
+  permission_sets = {
+    Developer = {
+      description = "Non-privileged developer users"
+      group       = "Developers"
+      eks_access  = true
+      managed_policies = [
+        "arn:aws:iam::aws:policy/ViewOnlyAccess"
+      ]
+      inline_policies = [
+        data.aws_iam_policy_document.s3_access.json
+      ]
+      account_ids = [
+        "012345678912",
+        "987654321098",
+      ]
+    }
+    ...
+  }
+  sso_instance_arn = tolist(data.aws_ssoadmin_instances.main.arns)[0]
+  sso_instance_id  = tolist(data.aws_ssoadmin_instances.main.identity_store_ids)[0]
+}
+```
+
+From the above:
+
+* `group` maps to the SSO group where this Permission Set applies. See section below about important [Design considerations](#design-considerations)
+* `eks_access`: if the Permission Set is going to be mapped into K8s RBAC, it needs to have read access to the EKS AWS service. This flag ensures that
+* `managed_policies`: list of AWS managed policies ARNs
+* `inline_policies`: list of policies to assign inline to the Permission Set. These must be references to policies defined as `aws_iam_policy_document` data sources. Note that a Permission Set can only have a single inline policy, but you can define multiple here since there's some logic inside the Terraform module that will merge them into a single one
+* `account_ids`: the AWS account ids where to apply the Permission Set with the assigned group
+
+### Design considerations
+
+For each Permission Set that is assigned to an account, AWS SSO creates a IAM role in that account. For example, if the `Developer` Permission Set is used in an account for one or more groups, AWS will create an IAM role named `AWSReservedSSO_Developer_1234567890...` in that account.
+
+We user IAM roles in each of the infrastructure accounts to authenticate to Kubernetes (EKS) clusters, and these roles are mapped to internal k8s groups that are then used to assign different RBAC permissions.
+
+To be able to grant meaningful RBAC permissions in K8s to users, the used IAM roles must identify the group the user belongs to. This is why we made the decision to map each SSO group to a single Permission Set with the same name. This way the information of the group a user belongs to is carried over to the K8s authorization level, and the correct RBAC permissions can be assigned to each group.
+
+The mapping between IAM roles and K8s groups is done in the cluster definition file.
