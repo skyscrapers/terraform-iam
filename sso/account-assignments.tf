@@ -20,9 +20,11 @@ data "aws_identitystore_group" "groups" {
 
   identity_store_id = var.sso_instance_id
 
-  filter {
-    attribute_path  = "DisplayName"
-    attribute_value = each.value
+  alternate_identifier {
+    unique_attribute {
+      attribute_path  = "DisplayName"
+      attribute_value = each.value
+    }
   }
 }
 
