@@ -9,8 +9,9 @@ variable "sso_instance_arn" {
 }
 
 variable "group_ids" {
-  description = "Map of Identity Store group display name to group id. Must contain every `group` used in `permission_sets`."
+  description = "Map of Identity Store group display name to group id. A `group` used in `permission_sets` that is missing from this map is looked up by display name, which needs the caller to order the group creation itself."
   type        = map(string)
+  default     = {}
 }
 
 variable "permission_sets" {
