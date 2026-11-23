@@ -320,7 +320,7 @@ module "base_roles" {
 
 ## sso
 
-This Terraform module configures the AWS Single Sign-on in the master account. The SSO identity source and SSO groups must be created manually through the AWS console. Populating the groups with users is also outside the scope of this module.
+This Terraform module configures the AWS Single Sign-on in the master account. The SSO identity source and SSO groups are managed outside this module, and so is populating the groups with users. The module finds each group's id in `group_ids`, or else looks the group up by display name.
 
 This module manages:
 
@@ -363,6 +363,7 @@ No modules.
 | <a name="input_sso_instance_arn"></a> [sso\_instance\_arn](#input\_sso\_instance\_arn) | n/a | `string` | n/a | yes |
 | <a name="input_sso_instance_id"></a> [sso\_instance\_id](#input\_sso\_instance\_id) | n/a | `string` | n/a | yes |
 | <a name="input_default_ps_session_duration"></a> [default\_ps\_session\_duration](#input\_default\_ps\_session\_duration) | n/a | `string` | `"PT8H"` | no |
+| <a name="input_group_ids"></a> [group\_ids](#input\_group\_ids) | Map of Identity Store group display name to group id. A `group` used in `permission_sets` that is missing from this map is looked up by display name, which needs the caller to order the group creation itself. | `map(string)` | `{}` | no |
 
 ### Outputs
 
@@ -397,6 +398,9 @@ module "sso_config" {
     }
     ...
   }
+  group_ids = {
+    Developers = aws_identitystore_group.developers.group_id
+  }
   sso_instance_arn = tolist(data.aws_ssoadmin_instances.main.arns)[0]
   sso_instance_id  = tolist(data.aws_ssoadmin_instances.main.identity_store_ids)[0]
 }
@@ -409,6 +413,9 @@ From the above:
 * `managed_policies`: list of AWS managed policies ARNs
 * `inline_policies`: list of policies to assign inline to the Permission Set. These must be references to policies defined as `aws_iam_policy_document` data sources. Note that a Permission Set can only have a single inline policy, but you can define multiple here since there's some logic inside the Terraform module that will merge them into a single one
 * `account_ids`: the AWS account ids where to apply the Permission Set with the assigned group
+* `group_ids` (optional): map of group display name to Identity Store group id. The module supports two modes:
+  * Group in `group_ids`: the module uses the given id. Use this when the caller creates the groups: pass a reference to the group resource, and the account assignments need no `depends_on`. The map keys must be known at plan time, the ids may be known only after apply
+  * Group not in `group_ids`: the module looks the group up by display name, as before this input existed. The group must exist before the lookup runs, so a caller that creates the group in the same configuration must order it with `depends_on`. Any pending change in the dependency then defers the lookup to apply time, which makes every `principal_id` unknown and replaces every account assignment
 
 ### Design considerations
 

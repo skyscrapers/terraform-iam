@@ -8,6 +8,12 @@ variable "sso_instance_arn" {
   type        = string
 }
 
+variable "group_ids" {
+  description = "Map of Identity Store group display name to group id. A `group` used in `permission_sets` that is missing from this map is looked up by display name, which needs the caller to order the group creation itself."
+  type        = map(string)
+  default     = {}
+}
+
 variable "permission_sets" {
   description = ""
   type = map(object({
